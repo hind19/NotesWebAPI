@@ -8,11 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NotesDomain\Notes.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\AutoMapper\" />
+    <Folder Include="CQRS\Queries\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>
