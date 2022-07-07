@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NotesDomain;
+using Notes.Domain.Entities;
 
 namespace Notes.Persistence.EntityTypeConfigurations
 {
@@ -13,7 +13,10 @@ namespace Notes.Persistence.EntityTypeConfigurations
 
             builder.Property(x => x.Title)
                 .HasMaxLength(250);
-                  
+
+            builder.Property(x => x.IsActive)
+                .HasDefaultValue(true);
+
         }
     }
 }

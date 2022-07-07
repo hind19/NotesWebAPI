@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Notes.Application.Interfaces;
-using NotesDomain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Notes.Domain.Entities;
 
 namespace Notes.Persistence
 {
-    public sealed class NotesDbContext : DbContext, INotesDbContext
+    public sealed class NotesDbContext : DbContext
     {
         public DbSet<Note>  Notes { get; set; }
 

@@ -16,10 +16,4 @@
     <ProjectReference Include="..\NotesDomain\Notes.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\AutoMapper\" />
-    <Folder Include="CQRS\Queries\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
 </Project>

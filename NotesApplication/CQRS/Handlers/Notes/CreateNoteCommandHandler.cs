@@ -1,34 +1,21 @@
 ﻿using MediatR;
 using Notes.Application.CQRS.Commands.Notes;
 using Notes.Application.Interfaces;
-using NotesDomain;
 
 namespace Notes.Application.CQRS.Handlers.Notes
 {
     public class CreateNoteCommandHandler : IRequestHandler<CreateNoteCommand, Guid>
     {
-        private readonly INotesDbContext _dbContext;
+        private readonly INotesRepository _notesRepository;
 
-        public CreateNoteCommandHandler(INotesDbContext dbContext)
+        public CreateNoteCommandHandler(INotesRepository notesRepository)
         {
-            _dbContext = dbContext;
+            _notesRepository = notesRepository;
         }
 
         public async Task<Guid> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
         {
-            var note = new Note
-            {
-                UserId = request.UserId,
-                Title = request.Title,
-                Content = request.Content,
-                NoteId = Guid.NewGuid(),
-                CreationDate = DateTime.Now,
-            };
-
-            await _dbContext.Notes.AddAsync(note, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return note.NoteId;
+            return await _notesRepository.CreateNote(request.UserId, request.Title, request.Content);
         }
     }
 }
