@@ -15,7 +15,7 @@ namespace Notes.Application.CQRS.Handlers.Notes
 
         public async Task<Guid> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
         {
-            return await _notesRepository.CreateNote(request.UserId, request.Title, request.Content);
+            return await _notesRepository.CreateNote(request.UserId, request.Title, request.Content, cancellationToken);
         }
     }
 }

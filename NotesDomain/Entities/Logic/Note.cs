@@ -9,5 +9,11 @@ namespace Notes.Domain.Entities
              Title = model.Title;
             Content = model.Content;
         }
+
+        public void SetNoteDeleted()
+        {
+            IsActive = false;
+            IsDeleted = true;
+        }
     }
 }

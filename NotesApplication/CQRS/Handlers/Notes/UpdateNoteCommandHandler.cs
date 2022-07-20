@@ -22,7 +22,7 @@ namespace Notes.Application.CQRS.Handlers.Notes
 
         public async Task<NoteDto> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
         {
-            var updatedEntnty = await _notesRepository.UpdateNote(request.UpdatedNote);
+            var updatedEntnty = await _notesRepository.UpdateNote(request.UpdatedNote, cancellationToken);
 
             return _mapper.Map<NoteDto>(updatedEntnty);
         }

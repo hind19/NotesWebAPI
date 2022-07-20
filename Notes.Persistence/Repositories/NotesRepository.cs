@@ -1,7 +1,8 @@
-﻿using Notes.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Notes.Application.Interfaces;
 using Notes.Domain.Dtos;
 using Notes.Domain.Entities;
-
+using System.Linq;
 
 namespace Notes.Persistence.Repositories
 {
@@ -14,7 +15,7 @@ namespace Notes.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Guid> CreateNote(Guid userId, string title, string content)
+        public async Task<Guid> CreateNote(Guid userId, string title, string content, CancellationToken cancellationToken)
         {
             var note = new Note
             {
@@ -25,13 +26,13 @@ namespace Notes.Persistence.Repositories
                 CreationDate = DateTime.Now,
             };
 
-            await _context.Notes.AddAsync(note, CancellationToken.None);
-            await _context.SaveChangesAsync(CancellationToken.None);
+            await _context.Notes.AddAsync(note, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
 
             return note.NoteId;
         }
 
-        public async Task<Note> UpdateNote(NoteDto model)
+        public async Task<Note> UpdateNote(NoteDto model, CancellationToken cancellationToken)
         {
             var note = _context.Notes.FirstOrDefault(x => x.NoteId == model.NoteId);
 
@@ -41,9 +42,40 @@ namespace Notes.Persistence.Repositories
             }
 
             note.Update(model);
-            await _context.SaveChangesAsync(CancellationToken.None);
+            await _context.SaveChangesAsync(cancellationToken);
 
             return note;
+        }
+
+        public async Task DeleteNote(Guid noteId, CancellationToken cancellationToken)
+        {
+            var note = _context.Notes.FirstOrDefault(x => x.NoteId == noteId);
+
+            if (note == null)
+            {
+                throw new ArgumentException("Note wasn't found");
+            }
+
+            note.SetNoteDeleted();
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<IReadOnlyCollection<Note>> GetAllNotesList(Guid userId, bool activeOnly)
+        {
+            var notes =  _context.Notes.Where(x => x.UserId == userId);
+            if(activeOnly)
+            {
+                notes = notes.Where(x => x.IsActive);
+            }
+
+            return notes.ToList().AsReadOnly();
+
+        }
+
+        public async Task<Note> GetNoteById(Guid noteId, Guid userId)
+        {
+            return await _context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId && x.UserId == userId);
         }
     }
 }
