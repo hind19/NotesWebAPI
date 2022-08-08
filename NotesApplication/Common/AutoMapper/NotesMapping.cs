@@ -4,7 +4,7 @@ using Notes.Domain.Entities;
 
 namespace Notes.Application.Common.AutoMapper
 {
-    internal class NotesMapping : Profile
+    public class NotesMapping : Profile
     {
         public NotesMapping()
         {
