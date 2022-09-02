@@ -6,6 +6,7 @@ using Notes.Domain.Dtos;
 
 namespace Notes.WebAPI.Controllers
 {
+    [Route("api/[controller]")]
     public class NoteController : BaseController
     {
         [HttpGet]

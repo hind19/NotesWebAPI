@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Notes.Application.Interfaces;
+using Notes.Persistence.Repositories;
 
 namespace Notes.Persistence
 {
@@ -13,6 +15,8 @@ namespace Notes.Persistence
             {
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddTransient<INotesRepository, NotesRepository>();
 
 
             return services;
