@@ -1,6 +1,7 @@
 ﻿using Notes.Application;
 using Notes.Application.Common.AutoMapper;
 using Notes.Persistence;
+using Notes.WebAPI.Middleware;
 
 namespace Notes.WebAPI
 {
@@ -44,6 +45,7 @@ namespace Notes.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCustomExceptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors(CORSPolicyName);
