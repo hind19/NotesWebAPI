@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Notes.Application.Common;
+using Notes.Application.Exceptions;
 using System.Net;
 using System.Text.Json;
 
@@ -37,6 +38,12 @@ namespace Notes.WebAPI.Middleware
                     code = HttpStatusCode.BadRequest;
                     message = JsonSerializer.Serialize(validationException.Errors);
                     break;
+
+                case EntityNotFoundException notFoundException:
+                    code=HttpStatusCode.NotFound;
+                    message = notFoundException.Message;
+                    break;
+
 
             }
             context.Response.ContentType = Constants.AppJson;
