@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
 using Notes.Application;
 using Notes.Application.Common.AutoMapper;
+using Notes.Application.Interfaces;
 using Notes.Persistence;
 using Notes.WebAPI.Middleware;
+using Notes.WebAPI.Services;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 namespace Notes.WebAPI
@@ -51,29 +56,47 @@ namespace Notes.WebAPI
 
                 });
 
-            services.AddSwaggerGen(config =>
+            services.AddVersionedApiExplorer(options =>
+                options.GroupNameFormat = "'v'VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+            services.AddSwaggerGen(/*config =>
             {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 config.IncludeXmlComments(xmlPath);
-            });
+            }*/);
+
+            services.AddApiVersioning();
+
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddHttpContextAccessor();
         }
         
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if(env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(config =>
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    config.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+                    config.RoutePrefix = string.Empty;
+                }
+            });
             app.UseCustomExceptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors(CORSPolicyName);
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseApiVersioning();
 
             app.UseEndpoints(endpoints =>
             {

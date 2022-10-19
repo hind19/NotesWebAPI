@@ -1,4 +1,6 @@
 using Notes.Persistence;
+using Serilog;
+using Serilog.Events;
 
 namespace Notes.WebAPI
 {
@@ -6,6 +8,10 @@ namespace Notes.WebAPI
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .WriteTo.File("NotesWebApiLog.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
             var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
@@ -18,7 +24,7 @@ namespace Notes.WebAPI
                 }
                 catch(Exception ex)
                 {
-
+                    Log.Fatal(ex, "Application gas been crashed while inintialization");
                 }
             }
 
@@ -28,6 +34,7 @@ namespace Notes.WebAPI
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+            .UseSerilog()
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();

@@ -7,8 +7,11 @@ using Notes.Domain.Dtos;
 
 namespace Notes.WebAPI.Controllers
 {
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    // [ApiVersionNeutral]  // For Any API version 
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/{version:apiVersion}/[controller]")]
     public class NoteController : BaseController
     {
         /// <summary>
