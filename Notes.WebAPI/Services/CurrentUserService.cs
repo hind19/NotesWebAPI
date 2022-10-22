@@ -13,15 +13,12 @@ namespace Notes.WebAPI.Services
             _contextAccessor = contextAccessor;
         }
 
-        public Guid UserId
+        public Guid GetUserId()
         {
-            get 
-            {
-                var id = _contextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-                return string.IsNullOrWhiteSpace(id)
-                    ? Guid.Empty
-                    : Guid.Parse(id);
-            }
+            var id = _contextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            return string.IsNullOrWhiteSpace(id)
+                ? Guid.Empty
+                : Guid.Parse(id);
         }
     }
 }

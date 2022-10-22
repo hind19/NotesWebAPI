@@ -22,7 +22,7 @@ namespace Notes.Application.Common.Behaviors
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var requestName = typeof(TRequest).Name;
-            Log.Information("Notes Request {Name} {@UserId} {@Request}", requestName, _userService.UserId, request);
+            Log.Information("Notes Request {Name} {@UserId} {@Request}", requestName, _userService.GetUserId(), request);
 
             var response = await next();
 
