@@ -43,9 +43,8 @@ namespace Notes.WebAPI.Middleware
                     code=HttpStatusCode.NotFound;
                     message = notFoundException.Message;
                     break;
-
-
             }
+
             context.Response.ContentType = Constants.AppJson;
             context.Response.StatusCode = (int)code;
 
