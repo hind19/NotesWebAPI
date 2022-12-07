@@ -10,7 +10,7 @@ namespace Notes.Domain.Dtos
 
         public Guid NoteId { get; private set; }
 
-        [Required]
+        // [Required]
         public string Title { get; private set; }
 
         public string Content { get; private set; }

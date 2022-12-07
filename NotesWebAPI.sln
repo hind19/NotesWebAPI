@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.WebAPI", "Notes.WebAP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotesWebApi.Backend", "NotesWebApi.Backend", "{B1651E5E-281A-4BA9-A3A7-360E6CD44BB2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Identity", "Notes.Identity\Notes.Identity.csproj", "{D8EACD67-1BD4-4651-A846-88E23DD23A2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{EE7D73DD-A257-410F-9F64-32EE5816B906}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE7D73DD-A257-410F-9F64-32EE5816B906}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE7D73DD-A257-410F-9F64-32EE5816B906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8EACD67-1BD4-4651-A846-88E23DD23A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8EACD67-1BD4-4651-A846-88E23DD23A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8EACD67-1BD4-4651-A846-88E23DD23A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8EACD67-1BD4-4651-A846-88E23DD23A2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
