@@ -60,20 +60,13 @@ namespace Notes.WebAPI
                 options.GroupNameFormat = "'v'VVV");
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
-            services.AddSwaggerGen(/*config =>
-            {
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                config.IncludeXmlComments(xmlPath);
-            }*/);
-
+            services.AddSwaggerGen();
             services.AddApiVersioning();
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
         }
         
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if(env.IsDevelopment())
@@ -97,7 +90,6 @@ namespace Notes.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseApiVersioning();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

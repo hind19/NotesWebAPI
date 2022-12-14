@@ -24,6 +24,7 @@ namespace Notes.Persistence.Repositories
                 Content = content,
                 NoteId = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
+                IsActive= true,
             };
 
             await _context.Notes.AddAsync(note, cancellationToken);

@@ -6,14 +6,14 @@ namespace Notes.Domain.Dtos
     {
         #region Properties
 
-        public Guid UserId { get; private set; }
+        public Guid UserId { get; set; }
 
-        public Guid NoteId { get; private set; }
+        public Guid NoteId { get; set; }
 
         // [Required]
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
-        public string Content { get; private set; }
+        public string Content { get; set; }
 
         #endregion
     }

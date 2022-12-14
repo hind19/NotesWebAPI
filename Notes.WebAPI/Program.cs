@@ -29,7 +29,6 @@ namespace Notes.WebAPI
             }
 
             host.Run();
-
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

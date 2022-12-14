@@ -12,10 +12,17 @@ namespace Notes.Persistence.EntityTypeConfigurations
             builder.HasIndex(x => x.NoteId).IsUnique();
 
             builder.Property(x => x.Title)
+                .IsRequired()
                 .HasMaxLength(250);
+
+            builder.Property(x => x.Content)
+                .HasMaxLength(8000);
 
             builder.Property(x => x.IsActive)
                 .HasDefaultValue(true);
+
+            builder.Property(x => x.UserId)
+                .IsRequired();
 
         }
     }

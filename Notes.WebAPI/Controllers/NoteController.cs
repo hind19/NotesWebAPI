@@ -75,8 +75,8 @@ namespace Notes.WebAPI.Controllers
         /// <response code = "200">Success</response>
         /// <response code = "401">User is not authorized</response> 
         [HttpPost]
-        [Authorize]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+       // [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<Guid>> Create([FromBody] NoteDto note)
         {

@@ -3,12 +3,12 @@ using FluentValidation;
 
 namespace Notes.Application.Common.Behaviors
 {
-    public class ValidationBehaviors<TRequest, TResponse>
+    public class ValidationBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        public ValidationBehaviors(IEnumerable<IValidator<TRequest>> validators)
+        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }
