@@ -2,7 +2,6 @@
 using Notes.Application.Interfaces;
 using Notes.Domain.Dtos;
 using Notes.Domain.Entities;
-using System.Linq;
 
 namespace Notes.Persistence.Repositories
 {
@@ -24,7 +23,7 @@ namespace Notes.Persistence.Repositories
                 Content = content,
                 NoteId = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
-                IsActive= true,
+                IsActive = true,
             };
 
             await _context.Notes.AddAsync(note, cancellationToken);
@@ -37,7 +36,7 @@ namespace Notes.Persistence.Repositories
         {
             var note = _context.Notes.FirstOrDefault(x => x.NoteId == model.NoteId);
 
-            if(note == null)
+            if (note == null)
             {
                 throw new ArgumentException("Note wasn't found");
             }
@@ -64,8 +63,8 @@ namespace Notes.Persistence.Repositories
 
         public async Task<IReadOnlyCollection<Note>> GetAllNotesList(Guid userId, bool activeOnly)
         {
-            var notes =  _context.Notes.Where(x => x.UserId == userId);
-            if(activeOnly)
+            var notes = _context.Notes.Where(x => x.UserId == userId);
+            if (activeOnly)
             {
                 notes = notes.Where(x => x.IsActive);
             }

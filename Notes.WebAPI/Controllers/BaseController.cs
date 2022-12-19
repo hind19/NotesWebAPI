@@ -11,7 +11,7 @@ namespace Notes.WebAPI.Controllers
         private IMediator _mediator;
 
         protected IMediator Mediator =>
-            _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+            _mediator ?? HttpContext.RequestServices.GetService<IMediator>();
 
 
 

@@ -20,6 +20,5 @@ namespace Notes.Application.CQRS.Validators.Notes
             RuleFor(updateNoteCommand => updateNoteCommand.UpdatedNote.NoteId)
                 .NotEmpty();
         }
-
     }
 }

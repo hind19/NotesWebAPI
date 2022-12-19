@@ -14,10 +14,8 @@ namespace Notes.Application.CQRS.Validators.Notes
             RuleFor(createNoteCommand => createNoteCommand.Content)
                 .MaximumLength(8000);
 
-
             RuleFor(createNoteCommand => createNoteCommand.UserId)
                 .NotEmpty();
         }
-        
     }
 }

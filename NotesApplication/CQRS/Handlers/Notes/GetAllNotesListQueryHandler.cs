@@ -20,7 +20,7 @@ namespace Notes.Application.CQRS.Handlers.Notes
         public async Task<IReadOnlyCollection<NoteDto>> Handle(GetAllNotesListQuery request, CancellationToken cancellationToken)
         {
             var notes = await _repository.GetAllNotesList(request.UserId, request.ActiveOnly);
-            
+
             return _mapper.Map<IReadOnlyCollection<NoteDto>>(notes);
         }
     }

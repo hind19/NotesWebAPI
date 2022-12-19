@@ -2,7 +2,6 @@
 using Notes.Application.CQRS.Commands.Notes;
 using Notes.Application.Interfaces;
 
-
 namespace Notes.Application.CQRS.Handlers.Notes
 {
     public class DeleteNoteCommandHandler : IRequestHandler<DeleteNoteCommand, Task>
@@ -13,7 +12,6 @@ namespace Notes.Application.CQRS.Handlers.Notes
         {
             _notesRepository = notesRepository;
         }
-
 
         public async Task<Task> Handle(DeleteNoteCommand request, CancellationToken cancellationToken)
         {

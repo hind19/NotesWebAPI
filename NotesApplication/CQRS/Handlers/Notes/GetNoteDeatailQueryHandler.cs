@@ -3,11 +3,6 @@ using MediatR;
 using Notes.Application.CQRS.Queries;
 using Notes.Application.Interfaces;
 using Notes.Domain.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Notes.Application.CQRS.Handlers.Notes
 {

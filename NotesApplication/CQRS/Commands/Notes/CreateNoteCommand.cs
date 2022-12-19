@@ -8,7 +8,7 @@ namespace Notes.Application.CQRS.Commands.Notes
         {
             UserId = userId;
             Title = title;
-            Content = content;  
+            Content = content;
         }
 
         public Guid UserId { get; }
