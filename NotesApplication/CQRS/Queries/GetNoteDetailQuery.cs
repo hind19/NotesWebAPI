@@ -3,17 +3,23 @@ using Notes.Domain.Dtos;
 
 namespace Notes.Application.CQRS.Queries
 {
+    /// <summary>
+    /// Provides the filtered query by Notes Id.
+    /// </summary>
     public class GetNoteDetailQuery : IRequest<NoteDto>
     {
-        public GetNoteDetailQuery(Guid noteId, Guid userId)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetNoteDetailQuery"/> class.
+        /// </summary>
+        /// <param name="noteId">Note Id.</param>
+        public GetNoteDetailQuery(Guid noteId)
         {
             NoteId = noteId;
-            UserId = userId;
         }
 
+        /// <summary>
+        /// Gets Note Id.
+        /// </summary>
         public Guid NoteId { get; }
-
-        // Not sure about this propertry
-        public Guid UserId { get; }
     }
 }

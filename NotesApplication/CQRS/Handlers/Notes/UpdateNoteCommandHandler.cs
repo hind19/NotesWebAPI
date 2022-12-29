@@ -6,20 +6,29 @@ using Notes.Domain.Dtos;
 
 namespace Notes.Application.CQRS.Handlers.Notes
 {
+    /// <summary>
+    /// Provides handler fpr <see cref="UpdateNoteCommand"/>.
+    /// </summary>
     public class UpdateNoteCommandHandler : IRequestHandler<UpdateNoteCommand, NoteDto>
     {
-        private readonly INotesRepository _notesRepository;
+        private readonly INotesRepository _repository;
         private readonly IMapper _mapper;
 
-        public UpdateNoteCommandHandler(INotesRepository notesRepository, IMapper mapper)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateNoteCommandHandler"/> class.
+        /// </summary>
+        /// <param name="repository">Repository instance.</param>
+        /// <param name="mapper">Automapper instance.</param>
+        public UpdateNoteCommandHandler(INotesRepository repository, IMapper mapper)
         {
-            _notesRepository = notesRepository;
+            _repository = repository;
             _mapper = mapper;
         }
 
+        /// <inheritdoc/>
         public async Task<NoteDto> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
         {
-            var updatedEntnty = await _notesRepository.UpdateNote(request.UpdatedNote, cancellationToken);
+            var updatedEntnty = await _repository.UpdateNote(request.UpdatedNote, cancellationToken);
 
             return _mapper.Map<NoteDto>(updatedEntnty);
         }

@@ -9,7 +9,7 @@ namespace Notes.Application.Common.Behaviors
     /// </summary>
     /// <typeparam name="TRequest">Request.</typeparam>
     /// <typeparam name="TResponse">Response.</typeparam>
-    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public sealed class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly ICurrentUserService _userService;

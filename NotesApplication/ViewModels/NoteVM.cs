@@ -1,16 +1,31 @@
 ﻿namespace Notes.Application.ViewModels
 {
-    public class NoteVM
+    /// <summary>
+    /// Provides Note View model.
+    /// </summary>
+    public sealed class NoteVM
     {
         #region Properties
 
-        public Guid UserId { get; private set; }
+        /// <summary>
+        /// Gets or sets User Id.
+        /// </summary>
+        public Guid UserId { get; set; }
 
-        public Guid NoteId { get; private set; }
+        /// <summary>
+        /// Gets or sets the Note Id.
+        /// </summary>
+        public Guid NoteId { get; set; }
 
-        public string Title { get; private set; }
+        /// <summary>
+        /// Gets or sets  the Title.
+        /// </summary>
+        public string Title { get; set; }
 
-        public string Content { get; private set; }
+        /// <summary>
+        /// Gets or sets the Content.
+        /// </summary>
+        public string Content { get; set; }
 
         #endregion
     }

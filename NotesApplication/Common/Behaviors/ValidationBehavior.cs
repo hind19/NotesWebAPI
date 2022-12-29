@@ -8,12 +8,11 @@ namespace Notes.Application.Common.Behaviors
     /// </summary>
     /// <typeparam name="TRequest">The request.</typeparam>
     /// <typeparam name="TResponse">The responsr</typeparam>
-    public class ValidationBehavior<TRequest, TResponse>
+    public sealed class ValidationBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidationBehavior{TRequest, TResponse}"/> class.

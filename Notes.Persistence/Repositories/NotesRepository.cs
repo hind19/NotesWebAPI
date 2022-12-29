@@ -63,6 +63,8 @@ namespace Notes.Persistence.Repositories
 
         public async Task<IReadOnlyCollection<Note>> GetAllNotesList(Guid userId, bool activeOnly)
         {
+             await Task.Yield();
+
             var notes = _context.Notes.Where(x => x.UserId == userId);
             if (activeOnly)
             {
@@ -73,9 +75,9 @@ namespace Notes.Persistence.Repositories
 
         }
 
-        public async Task<Note> GetNoteById(Guid noteId, Guid userId)
+        public async Task<Note> GetNoteById(Guid noteId)
         {
-            return await _context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId && x.UserId == userId);
+            return await _context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Notes.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<NoteDto>> GetDetails(Guid noteId)
         {
-            var query = new GetNoteDetailQuery(UserId, noteId);
+            var query = new GetNoteDetailQuery(noteId);
             var result = await Mediator.Send(query);
 
             return Ok(result);
