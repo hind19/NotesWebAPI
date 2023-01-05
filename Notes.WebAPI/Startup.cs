@@ -8,7 +8,6 @@ using Notes.Persistence;
 using Notes.WebAPI.Middleware;
 using Notes.WebAPI.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
 
 namespace Notes.WebAPI
 {
@@ -48,7 +47,7 @@ namespace Notes.WebAPI
                 config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer("Bearer", options => 
+                .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://localhost:7099/";
                     options.Audience = "NotesWebAPI";
@@ -66,10 +65,10 @@ namespace Notes.WebAPI
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -78,7 +77,8 @@ namespace Notes.WebAPI
             {
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    config.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                    config.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
                         description.GroupName.ToUpperInvariant());
                     config.RoutePrefix = string.Empty;
                 }

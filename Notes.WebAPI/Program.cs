@@ -22,7 +22,7 @@ namespace Notes.WebAPI
                     var context = serviceProvider.GetRequiredService<NotesDbContext>();
                     DbInitializer.Initialize(context);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Log.Fatal(ex, "Application gas been crashed while inintialization");
                 }

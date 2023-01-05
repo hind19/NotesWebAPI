@@ -1,5 +1,5 @@
-﻿using Notes.Application.Interfaces;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Notes.Application.Interfaces;
 
 namespace Notes.WebAPI.Services
 {

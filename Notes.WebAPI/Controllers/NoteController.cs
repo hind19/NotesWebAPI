@@ -9,7 +9,7 @@ namespace Notes.WebAPI.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
-    // [ApiVersionNeutral]  // For Any API version 
+    // [ApiVersionNeutral]  // For Any API version. 
     [Produces("application/json")]
     [Route("api/{version:apiVersion}/[controller]")]
     public class NoteController : BaseController
@@ -120,15 +120,15 @@ namespace Notes.WebAPI.Controllers
         /// <param name="noteId">Id of deleting note.</param>
         /// <returns></returns>
         /// <response code = "200">Success</response>
-        /// <response code = "401">User is not authorized</response> 
+        /// <response code = "401">User is not authorized.</response> 
         [HttpDelete]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Delete(Guid noteId)
-        { 
+        {
             await Mediator.Send(new DeleteNoteCommand(noteId, UserId));
-            
+
             return NoContent();
         }
     }

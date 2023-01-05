@@ -26,7 +26,7 @@ namespace Notes.WebAPI
                     {
                         Version = apiversion,
                         Title = $"Notes API, version:{apiversion}",
-                        Description = "Notes API. Pet project."
+                        Description = "Notes API. Pet project.",
                     });
                 options.AddSecurityDefinition(
                     $"AuthToken {apiversion}",
@@ -37,7 +37,7 @@ namespace Notes.WebAPI
                         BearerFormat = "JWT",
                         Scheme = "bearer",
                         Name = "Authorization",
-                        Description = "Authorization token"
+                        Description = "Authorization token",
                     });
 
                 options.AddSecurityRequirement(
@@ -50,15 +50,13 @@ namespace Notes.WebAPI
                             {
                                 Type = ReferenceType.SecurityScheme,
                                 Id = $"AuthToken {apiversion}",
-                            }
+                            },
                         },
                         new string[] { }
                         }
                     });
 
                 options.CustomOperationIds(apiDescription => apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);
-
-
             }
         }
     }

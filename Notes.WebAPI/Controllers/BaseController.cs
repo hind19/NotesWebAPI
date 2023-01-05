@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using System.Security.Claims;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Notes.WebAPI.Controllers
 {
@@ -13,12 +13,8 @@ namespace Notes.WebAPI.Controllers
         protected IMediator Mediator =>
             _mediator ?? HttpContext.RequestServices.GetService<IMediator>();
 
-
-
         internal Guid UserId => !User.Identity.IsAuthenticated
             ? Guid.Empty
             : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-         
-     
     }
 }

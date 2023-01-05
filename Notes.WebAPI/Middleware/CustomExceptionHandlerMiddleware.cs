@@ -21,7 +21,7 @@ namespace Notes.WebAPI.Middleware
             {
                 await _next(context);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex);
             }
@@ -32,7 +32,7 @@ namespace Notes.WebAPI.Middleware
             var code = HttpStatusCode.InternalServerError;
             var message = string.Empty;   
 
-            switch(ex)
+            switch (ex)
             {
                 case ValidationException validationException:
                     code = HttpStatusCode.BadRequest;
@@ -40,7 +40,7 @@ namespace Notes.WebAPI.Middleware
                     break;
 
                 case EntityNotFoundException notFoundException:
-                    code=HttpStatusCode.NotFound;
+                    code = HttpStatusCode.NotFound;
                     message = notFoundException.Message;
                     break;
             }
@@ -48,7 +48,7 @@ namespace Notes.WebAPI.Middleware
             context.Response.ContentType = Constants.AppJson;
             context.Response.StatusCode = (int)code;
 
-            if(string.IsNullOrEmpty(message))
+            if (string.IsNullOrEmpty(message))
             {
                 message = JsonSerializer.Serialize(new { error = ex.Message, stacktrace = ex.ToString() });
             }
