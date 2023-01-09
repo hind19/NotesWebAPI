@@ -7,9 +7,14 @@ using Notes.Domain.Dtos;
 
 namespace Notes.WebAPI.Controllers
 {
-    [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
-    // [ApiVersionNeutral]  // For Any API version. 
+    //[ApiVersion("1.0")]
+    //[ApiVersion("2.0")]
+    // For Any API version.
+
+    /// <summary>
+    /// Provides API actions for Notes.
+    /// </summary>
+    [ApiVersionNeutral]
     [Produces("application/json")]
     [Route("api/{version:apiVersion}/[controller]")]
     public class NoteController : BaseController
@@ -19,11 +24,11 @@ namespace Notes.WebAPI.Controllers
         /// </summary>
         /// <remarks>
         /// Request Sample:
-        /// GET /note
+        /// GET /note  .
         /// </remarks>
         /// <returns>Collection of all Notes.</returns>
-        /// <response code = "200">Success</response>
-        /// <response code = "401">User is not authorized</response>
+        /// <response code = "200">Success.</response>
+        /// <response code = "401">User is not authorized.</response>
         [HttpGet]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -37,7 +42,7 @@ namespace Notes.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets note details by ID
+        /// Gets note details by ID.
         /// </summary>
         /// <param name="noteId">Note Id.</param>
         /// <remarks>
@@ -45,8 +50,8 @@ namespace Notes.WebAPI.Controllers
         /// GET /note/NoteID(GUID).
         /// </remarks>
         /// <returns>Single note's details.</returns>
-        /// <response code = "200">Success</response>
-        /// <response code = "401">User is not authorized</response> 
+        /// <response code = "200">Success.</response>
+        /// <response code = "401">User is not authorized.</response>
         [HttpGet("{noteId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -68,14 +73,14 @@ namespace Notes.WebAPI.Controllers
         /// {
         ///     title:"notetitle",
         ///     details = "note details"
-        /// }
+        /// }.
         /// </remarks>
         /// <param name="note">Note Dto with data. </param>
         /// <returns>Id of the created note.</returns>
-        /// <response code = "200">Success</response>
-        /// <response code = "401">User is not authorized</response> 
+        /// <response code = "200">Success.</response>
+        /// <response code = "401">User is not authorized.</response>
         [HttpPost]
-       // [Authorize]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<Guid>> Create([FromBody] NoteDto note)
@@ -86,7 +91,6 @@ namespace Notes.WebAPI.Controllers
             return Ok(result);
         }
 
-
         /// <summary>
         /// Updates the Note.
         /// </summary>
@@ -96,12 +100,12 @@ namespace Notes.WebAPI.Controllers
         /// {
         ///     title:"notetitle",
         ///     details = "note details"
-        /// }
+        /// }.
         /// </remarks>
         /// <param name="note">Note Dto with data. </param>
         /// <returns>Updated note.</returns>
-        /// <response code = "200">Success</response>
-        /// <response code = "401">User is not authorized</response> 
+        /// <response code = "200">Success.</response>
+        /// <response code = "401">User is not authorized.</response>
         [HttpPut]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -115,12 +119,12 @@ namespace Notes.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Deletes the specific note
+        /// Deletes the specific note.
         /// </summary>
         /// <param name="noteId">Id of deleting note.</param>
-        /// <returns></returns>
-        /// <response code = "200">Success</response>
-        /// <response code = "401">User is not authorized.</response> 
+        /// <response code = "200">Success.</response>
+        /// <response code = "401">User is not authorized.</response>
+        /// <returns>No Content.</returns>
         [HttpDelete]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]

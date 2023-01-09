@@ -1,20 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
 
 namespace Notes.WebAPI
 {
+    /// <summary>
+    /// Provides Swagger configuration.
+    /// </summary>
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         private readonly IApiVersionDescriptionProvider _proivider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
+        /// </summary>
+        /// <param name="proivider">API Version provider.</param>
         public ConfigureSwaggerOptions(IApiVersionDescriptionProvider proivider)
         {
             _proivider = proivider;
         }
 
+        /// <summary>
+        /// Cofudures Swagger.
+        /// </summary>
+        /// <param name="options">Swagger options.</param>
         public void Configure(SwaggerGenOptions options)
         {
             foreach (var description in _proivider.ApiVersionDescriptions)
@@ -44,16 +55,16 @@ namespace Notes.WebAPI
                     new OpenApiSecurityRequirement
                     {
                         {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
+                            new OpenApiSecurityScheme
                             {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = $"AuthToken {apiversion}",
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = $"AuthToken {apiversion}",
+                                },
                             },
+                            new string[] { }
                         },
-                        new string[] { }
-                        }
                     });
 
                 options.CustomOperationIds(apiDescription => apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);

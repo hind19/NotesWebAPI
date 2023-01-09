@@ -95,7 +95,23 @@ namespace Notes.Identity.Controllers
             await _signInManager.SignOutAsync();
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
             return Redirect(logoutRequest.PostLogoutRedirectUri);
+        }
 
+        [HttpGet]
+        public async Task<ActionResult<Guid>> GetUserId([FromBody] ApiLoginViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var user = await _userManager.FindByNameAsync(viewModel.Username);
+            if (user is null)
+            {
+                ModelState.AddModelError(String.Empty, "User is not found");
+                return NotFound();
+            }
+             return Ok(user.Id);
         }
     }
 }

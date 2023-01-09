@@ -11,16 +11,31 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Notes.WebAPI
 {
+    /// <summary>
+    /// Provides application setup.
+    /// </summary>
     public class Startup
     {
         private const string CORSPolicyName = "AllowAll";
-        public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="configuration">Application configuration.</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Gets Application configuration.
+        /// </summary>
+        public IConfiguration Configuration { get; }
+
+        /// <summary>
+        /// Configures Services Collection.
+        /// </summary>
+        /// <param name="services">Services collection.</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(config =>
@@ -52,7 +67,6 @@ namespace Notes.WebAPI
                     options.Authority = "https://localhost:7099/";
                     options.Audience = "NotesWebAPI";
                     options.RequireHttpsMetadata = false;
-
                 });
 
             services.AddVersionedApiExplorer(options =>
@@ -66,12 +80,19 @@ namespace Notes.WebAPI
             services.AddHttpContextAccessor();
         }
 
+        /// <summary>
+        /// Configures application pipeline.
+        /// </summary>
+        /// <param name="app">Application builder.</param>
+        /// <param name="env">Environment parameters.</param>
+        /// <param name="provider">API version provider.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseSwagger();
             app.UseSwaggerUI(config =>
             {

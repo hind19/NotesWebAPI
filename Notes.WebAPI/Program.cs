@@ -4,8 +4,15 @@ using Serilog.Events;
 
 namespace Notes.WebAPI
 {
+    /// <summary>
+    /// Entry class of thee application.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Application's entry point.
+        /// </summary>
+        /// <param name="args">Startup parameters.</param>
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -31,6 +38,11 @@ namespace Notes.WebAPI
             host.Run();
         }
 
+        /// <summary>
+        /// Sets up Host for application.
+        /// </summary>
+        /// <param name="args">Parameters.</param>
+        /// <returns>Host builder.</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .UseSerilog()
