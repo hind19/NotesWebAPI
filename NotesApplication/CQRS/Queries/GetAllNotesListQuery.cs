@@ -13,7 +13,7 @@ namespace Notes.Application.CQRS.Queries
         /// </summary>
         /// <param name="userId">User Id</param>
         /// <param name="activeOnly">Filer parameter for active only notes.</param>
-        public GetAllNotesListQuery(Guid userId, bool activeOnly)
+        public GetAllNotesListQuery(Guid userId, bool activeOnly = false)
         {
             UserId = userId;
             ActiveOnly = activeOnly;

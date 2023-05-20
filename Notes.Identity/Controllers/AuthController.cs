@@ -85,7 +85,7 @@ namespace Notes.Identity.Controllers
                 await _signInManager.SignInAsync(user, false);
                 return Redirect(viewModel.ReturnUrl);
             }
-            ModelState.AddModelError(String.Empty, "Registration error occured");
+            ModelState.AddModelError(string.Empty, "Registration error occured");
             return View(viewModel);
         }
 
@@ -108,10 +108,10 @@ namespace Notes.Identity.Controllers
             var user = await _userManager.FindByNameAsync(viewModel.Username);
             if (user is null)
             {
-                ModelState.AddModelError(String.Empty, "User is not found");
+                ModelState.AddModelError(string.Empty, "User is not found");
                 return NotFound();
             }
-             return Ok(user.Id);
+            return Ok(user.Id);
         }
     }
 }

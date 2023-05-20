@@ -38,10 +38,10 @@ namespace Notes.Identity
                     ClientName = "Notes Web",
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     RequireClientSecret = false,
-                    //ClientSecrets =
-                    //{
-                    //    new Secret("secret".Sha256())
-                    //},
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
                     RedirectUris =
                     {
                         //we have no client yet. So, the code mask is entered below.

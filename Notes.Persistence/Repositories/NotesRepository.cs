@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Notes.Application.Exceptions;
 using Notes.Application.Interfaces;
 using Notes.Domain.Dtos;
 using Notes.Domain.Entities;
@@ -8,6 +9,7 @@ namespace Notes.Persistence.Repositories
     internal class NotesRepository : INotesRepository
     {
         private readonly NotesDbContext _context;
+        private const string Note = "Note";
 
         public NotesRepository(NotesDbContext context)
         {
@@ -32,19 +34,19 @@ namespace Notes.Persistence.Repositories
             return note.NoteId;
         }
 
-        public async Task<Note> UpdateNote(NoteDto model, CancellationToken cancellationToken)
+        public async Task<Note> UpdateNote(NoteDto note, CancellationToken cancellationToken)
         {
-            var note = _context.Notes.FirstOrDefault(x => x.NoteId == model.NoteId);
+            var noteForUpdate = _context.Notes.FirstOrDefault(x => x.NoteId == note.NoteId);
 
-            if (note == null)
+            if (noteForUpdate == null)
             {
-                throw new ArgumentException("Note wasn't found");
+                throw new EntityNotFoundException(Note, note.NoteId);
             }
 
-            note.Update(model);
+            noteForUpdate.Update(note);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return note;
+            return noteForUpdate;
         }
 
         public async Task DeleteNote(Guid noteId, CancellationToken cancellationToken)
@@ -53,7 +55,7 @@ namespace Notes.Persistence.Repositories
 
             if (note == null)
             {
-                throw new ArgumentException("Note wasn't found");
+                throw new EntityNotFoundException(Note, noteId);
             }
 
             note.SetNoteDeleted();

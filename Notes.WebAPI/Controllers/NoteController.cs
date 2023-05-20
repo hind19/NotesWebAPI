@@ -2,26 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Notes.Application.CQRS.Commands.Notes;
 using Notes.Application.CQRS.Queries;
+using Notes.Application.Exceptions;
 using Notes.Application.ViewModels;
 using Notes.Domain.Dtos;
+using Notes.WebAPI.RequestModels;
 
 namespace Notes.WebAPI.Controllers
 {
-    //[ApiVersion("1.0")]
-    //[ApiVersion("2.0")]
-    // For Any API version.
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
 
-    /// <summary>
-    /// Provides API actions for Notes.
-    /// </summary>
     [ApiVersionNeutral]
     [Produces("application/json")]
-    [Route("api/{version:apiVersion}/[controller]")]
+    [Route("api/{version:apiVersion}/[controller]/[action]")]
+    /// <summary>
+    /// Controller providing API actions for Notes.
+    /// </summary>
     public class NoteController : BaseController
     {
         /// <summary>
         /// Get List of all Notes.
         /// </summary>
+        /// <param name="userId">User Id.</param>
+        /// <param name="activeOnly">Flag if we should take active only notes.</param>
         /// <remarks>
         /// Request Sample:
         /// GET /note  .
@@ -29,13 +32,13 @@ namespace Notes.WebAPI.Controllers
         /// <returns>Collection of all Notes.</returns>
         /// <response code = "200">Success.</response>
         /// <response code = "401">User is not authorized.</response>
-        [HttpGet]
+        [HttpGet("{userId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<IReadOnlyCollection<NoteVM>>> GetAll()
+        public async Task<ActionResult<IReadOnlyCollection<NoteVM>>> GetAll(Guid userId, bool activeOnly = false)
         {
-            var query = new GetAllNotesListQuery(UserId, false);
+            var query = new GetAllNotesListQuery(userId, activeOnly);
             var result = await Mediator.Send(query);
 
             return Ok(result);
@@ -55,13 +58,26 @@ namespace Notes.WebAPI.Controllers
         [HttpGet("{noteId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<NoteDto>> GetDetails(Guid noteId)
         {
-            var query = new GetNoteDetailQuery(noteId);
-            var result = await Mediator.Send(query);
+            try
+            {
+                var query = new GetNoteDetailQuery(noteId);
+                var result = await Mediator.Send(query);
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
         /// <summary>
@@ -83,7 +99,7 @@ namespace Notes.WebAPI.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<Guid>> Create([FromBody] NoteDto note)
+        public async Task<ActionResult<Guid>> Create([FromBody] CreateNoteRequestModel note)
         {
             var command = new CreateNoteCommand(note.UserId, note.Title, note.Content);
             var result = await Mediator.Send(command);
@@ -110,12 +126,25 @@ namespace Notes.WebAPI.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<NoteDto>> Update([FromBody] NoteDto note)
         {
-            var command = new UpdateNoteCommand(note);
-            var result = await Mediator.Send(command);
+            try
+            {
+                var command = new UpdateNoteCommand(note);
+                var result = await Mediator.Send(command);
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
         /// <summary>
@@ -129,11 +158,24 @@ namespace Notes.WebAPI.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(Guid noteId)
         {
-            await Mediator.Send(new DeleteNoteCommand(noteId, UserId));
+            try
+            {
+                _ = await Mediator.Send(new DeleteNoteCommand(noteId));
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
 
-            return NoContent();
+            return Ok();
         }
     }
 }

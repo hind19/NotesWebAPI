@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Notes.WebAPI.Controllers
@@ -18,13 +17,5 @@ namespace Notes.WebAPI.Controllers
         /// </summary>
         protected IMediator Mediator =>
             _mediator ?? HttpContext.RequestServices.GetService<IMediator>();
-
-        //TODO: Remove? I don't have a front here.
-        /// <summary>
-        /// Grts Current User Id.
-        /// </summary>
-        internal Guid UserId => !User.Identity.IsAuthenticated
-            ? Guid.Empty
-            : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
     }
 }

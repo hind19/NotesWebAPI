@@ -1,15 +1,22 @@
-﻿using FluentValidation;
+﻿using System.Net;
+using System.Text.Json;
+using FluentValidation;
 using Notes.Application.Common;
 using Notes.Application.Exceptions;
-using System.Net;
-using System.Text.Json;
 
 namespace Notes.WebAPI.Middleware
 {
+    /// <summary>
+    /// Custom middleware for exceptions handling.
+    /// </summary>
     public class CustomExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomExceptionHandlerMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The request delegate.</param>
         public CustomExceptionHandlerMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -30,7 +37,7 @@ namespace Notes.WebAPI.Middleware
         private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             var code = HttpStatusCode.InternalServerError;
-            var message = string.Empty;   
+            var message = string.Empty;
 
             switch (ex)
             {
