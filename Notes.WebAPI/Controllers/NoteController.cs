@@ -9,15 +9,15 @@ using Notes.WebAPI.RequestModels;
 
 namespace Notes.WebAPI.Controllers
 {
+    /// <summary>
+    /// Controller providing API actions for Notes.
+    /// </summary>
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
 
     [ApiVersionNeutral]
     [Produces("application/json")]
     [Route("api/{version:apiVersion}/[controller]/[action]")]
-    /// <summary>
-    /// Controller providing API actions for Notes.
-    /// </summary>
     public class NoteController : BaseController
     {
         /// <summary>

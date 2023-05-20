@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Notes.Application;
 using Notes.Application.Common.AutoMapper;
-using Notes.Application.Interfaces;
 using Notes.Persistence;
 using Notes.WebAPI.Middleware;
-using Notes.WebAPI.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Notes.WebAPI
@@ -75,8 +73,6 @@ namespace Notes.WebAPI
 
             services.AddSwaggerGen();
             services.AddApiVersioning();
-
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
         }
 

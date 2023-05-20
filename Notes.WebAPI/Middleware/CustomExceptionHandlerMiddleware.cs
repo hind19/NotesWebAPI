@@ -22,6 +22,11 @@ namespace Notes.WebAPI.Middleware
             _next = next;
         }
 
+        /// <summary>
+        /// Invockes next element of pipeline.
+        /// </summary>
+        /// <param name="context"> Current Http context.</param>
+        /// <returns>Instance of <see cref="Task"/>.</returns>
         public async Task Invoke(HttpContext context)
         {
             try

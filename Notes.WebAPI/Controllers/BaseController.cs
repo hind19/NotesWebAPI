@@ -16,6 +16,6 @@ namespace Notes.WebAPI.Controllers
         /// Gets Mediator for CQRS.
         /// </summary>
         protected IMediator Mediator =>
-            _mediator ?? HttpContext.RequestServices.GetService<IMediator>();
+            _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
     }
 }
